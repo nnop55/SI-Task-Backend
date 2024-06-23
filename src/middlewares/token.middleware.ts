@@ -9,23 +9,6 @@ export const verifyToken = async (
     res: Response,
     next: NextFunction
 ) => {
-    return await tokenCheck(req, next, 'accessToken', JWTSecretKey)
-};
-
-export const verifyRefreshToken = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    return await tokenCheck(req, next, 'refreshToken', JWTRefreshTokenSecretKey)
-};
-
-const tokenCheck = async (
-    req: Request,
-    next: NextFunction,
-    tokenCol: string,
-    secretKey: string | undefined
-) => {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
@@ -33,10 +16,11 @@ const tokenCheck = async (
     }
 
     try {
-        const decoded = verifyJwt(token, secretKey!);
-        const instance = await getUserByColumn('id', (decoded as any).id);
+        const decoded = verifyJwt(token, JWTSecretKey!);
 
-        if (!instance || !decoded) {
+        const instance = await getUserByColumn('_id', (decoded as any).id);
+
+        if (!decoded || !instance) {
             throw new UnauthorizedError()
         }
 
@@ -44,7 +28,37 @@ const tokenCheck = async (
 
         return next()
     } catch (err) {
-        await updateUserAccessToken(tokenCol, token, tokenCol, null)
+        //await updateUserAccessToken('accessToken', token, 'accessToken', null)
         next(new UnauthorizedError('Invalid Token'))
     }
-}
+};
+
+export const verifyRefreshToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { refreshToken } = req.body
+
+    if (!refreshToken) {
+        return next(new UnauthorizedError())
+    }
+
+    try {
+        const decoded = verifyJwt(refreshToken, JWTRefreshTokenSecretKey!);
+
+        const instance = await getUserByColumn('_id', (decoded as any).id);
+
+        if (!decoded || !instance) {
+            throw new UnauthorizedError()
+        }
+
+        (req as any).user = instance;
+
+        return next()
+    } catch (err) {
+        //await updateUserAccessToken('refreshToken', refreshToken, 'refreshToken', null)
+        next(new UnauthorizedError('Invalid Token'))
+    }
+};
+

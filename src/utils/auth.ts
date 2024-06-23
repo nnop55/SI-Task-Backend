@@ -17,7 +17,7 @@ export const hashPassword = (
 export const getJwt = (
     payload: any,
     secretKey: any,
-    time: string = '6h'
+    time: string = '10s'
 ) => {
     return jwt.sign(payload, secretKey!, { expiresIn: time });
 }

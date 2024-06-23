@@ -23,7 +23,7 @@ class AuthController {
         const refreshToken = getJwt(
             { id: user.id, username: user.username },
             JWTRefreshTokenSecretKey,
-            '7d'
+            '17s'
         );
         await updateUserAccessToken('username', username, 'accessToken', accessToken)
         await updateUserAccessToken('username', username, 'refreshToken', refreshToken)
@@ -38,7 +38,7 @@ class AuthController {
             JWTSecretKey
         );
 
-        await updateUserAccessToken('id', id, 'accessToken', accessToken)
+        await updateUserAccessToken('_id', id, 'accessToken', accessToken)
         res.status(200).json({ code: 1, data: { accessToken } });
     }
 
@@ -49,8 +49,8 @@ class AuthController {
 
     public async logout(req: Request, res: Response) {
         const { id } = (req as any).user;
-        await updateUserAccessToken('id', id, 'accessToken', null)
-        await updateUserAccessToken('id', id, 'refreshToken', null)
+        await updateUserAccessToken('_id', id, 'accessToken', null)
+        await updateUserAccessToken('_id', id, 'refreshToken', null)
         res.send({ code: 1, data: null });
     }
 }
