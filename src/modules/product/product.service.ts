@@ -1,18 +1,25 @@
 import NotFoundError from "../../utils/errors/notFoundError";
+import { paginate } from "../../utils/pagination";
 import Product from "./product.model";
 
 export const getProducts = async (
-    searchTitle: string | null
+    searchTitle: string,
+    params: any
 ) => {
-    let query = {};
+    // let query = {};
 
+    // if (searchTitle) {
+    //     query = { title: { $regex: searchTitle, $options: 'i' } };
+    // }
+
+    // const products = await Product.find(query);
+    const filters: any = {};
     if (searchTitle) {
-        query = { title: { $regex: searchTitle, $options: 'i' } };
+        filters.title = { exact: searchTitle };
     }
+    const paginatedData = await paginate(Product, params, filters);
 
-    const products = await Product.find(query);
-
-    return products;
+    return paginatedData;
 }
 
 export const getProductById = async (
