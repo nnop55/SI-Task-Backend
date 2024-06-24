@@ -3,10 +3,15 @@ import mongoose from "mongoose";
 
 const uri = `mongodb+srv://${dbParams.user}:${dbParams.password}@si-db.4o106tz.mongodb.net/?retryWrites=true&w=majority&appName=SI-DB`
 
-mongoose.connect(uri);
+export const connectDb = async () => {
+    try {
+        await mongoose.connect(uri);
+        console.log("Connected to MongoDB");
+    } catch (error) {
+        console.error("MongoDb connection Error:", error);
+    }
+}
 
-export const connectDb = () => {
-    const db = mongoose.connection;
-    db.on("error", console.error.bind(console, "MongoDB connection error:"));
-    db.once("open", () => console.log("Connected to MongoDB"));
+export const closeConnection = async () => {
+    await mongoose.connection.close();
 }

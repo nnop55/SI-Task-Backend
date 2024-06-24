@@ -23,7 +23,6 @@ export const updateUserAccessToken = async (
     column: string,
     token: string | null,
 ) => {
-    console.log(searchColumn, value)
     const user = await getUserByColumn(
         searchColumn,
         value
@@ -41,7 +40,7 @@ export const getUserByColumn = async (
     let query: any = {
         [column]: value
     };
-    console.log(query)
+
     const user = await User.findOne(query);
     query = {}
     if (!user) {

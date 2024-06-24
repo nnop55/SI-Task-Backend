@@ -52,10 +52,11 @@ export const updateProduct = async (
 }
 
 export const saleProduct = async (
-    productId: string
+    productId: string,
+    quantity: number
 ) => {
     const product = await getProductById(productId);
-    product.quantityForSale -= 1;
+    product.productCount -= quantity;
     await product.save();
     return product;
 }

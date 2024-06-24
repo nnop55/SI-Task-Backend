@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "set NODE_ENV=development&& nodemon --exec ts-node-esm src/index.ts",
-    "start": "set NODE_ENV=production&& node src/index.ts"
+    "start": "set NODE_ENV=production&& node src/index.ts",
+    "seed": "set NODE_ENV=development&& nodemon --exec ts-node-esm src/utils/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",

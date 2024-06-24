@@ -33,7 +33,8 @@ class ProductController {
 
     public async saleProduct(req: Request, res: Response) {
         const productId = req.params.productId;
-        const saledProduct = await saleProduct(productId)
+        const { quantity } = req.body
+        const saledProduct = await saleProduct(productId, quantity)
         res.status(200).json({ code: 1, data: saledProduct })
     }
 }

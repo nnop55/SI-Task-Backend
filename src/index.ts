@@ -42,9 +42,9 @@ function setupErrorHandling() {
 }
 
 async function startServer(port: number | string) {
-    connectDb()
-
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
-    });
+    await connectDb().then(() => {
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+    })
 }

@@ -9,10 +9,6 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    quantityForSale: {
-        type: Number,
-        required: true,
-    },
     productCount: {
         type: Number,
         required: true,

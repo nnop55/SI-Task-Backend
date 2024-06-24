@@ -23,7 +23,7 @@ class AuthController {
         const refreshToken = getJwt(
             { id: user.id, username: user.username },
             JWTRefreshTokenSecretKey,
-            '17s'
+            '3d'
         );
         await updateUserAccessToken('username', username, 'accessToken', accessToken)
         await updateUserAccessToken('username', username, 'refreshToken', refreshToken)
