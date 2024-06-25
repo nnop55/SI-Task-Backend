@@ -16,6 +16,12 @@ export const paginate = async (
         if (val.range) {
             query[key] = { $gte: val.range.from, $lte: val.range.to };
         }
+        if (val.from) {
+            query[key] = { $gte: val.from };
+        }
+        if (val.to) {
+            query[key] = { $lte: val.to };
+        }
     }
 
     const totalCount = await model.countDocuments(query);

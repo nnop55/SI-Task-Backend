@@ -3,20 +3,30 @@ import { paginate } from "../../utils/pagination";
 import Product from "./product.model";
 
 export const getProducts = async (
-    title: string,
     params: any
 ) => {
-    // let query = {};
+    const { title, priceFrom, priceTo, productCountFrom, productCountTo } = params
 
-    // if (title) {
-    //     query = { title: { $regex: title, $options: 'i' } };
-    // }
-
-    // const products = await Product.find(query);
     const filters: any = {};
     if (title) {
         filters.title = { exact: title };
     }
+    if (priceFrom && priceTo) {
+        filters.price = { range: { from: parseFloat(priceFrom), to: parseFloat(priceTo) } };
+    } else if (priceFrom) {
+        filters.price = { from: parseFloat(priceFrom) };
+    } else if (priceTo) {
+        filters.price = { to: parseFloat(priceTo) };
+    }
+
+    if (productCountFrom && productCountTo) {
+        filters.productCount = { range: { from: parseFloat(productCountFrom), to: parseFloat(productCountTo) } };
+    } else if (productCountFrom) {
+        filters.productCount = { from: parseFloat(productCountFrom) };
+    } else if (productCountTo) {
+        filters.productCount = { to: parseFloat(productCountTo) };
+    }
+
     const paginatedData = await paginate(Product, params, filters);
 
     return paginatedData;
