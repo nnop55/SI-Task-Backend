@@ -3,8 +3,8 @@ import { createProduct, deleteProduct, getProducts, getProductById, updateProduc
 
 class ProductController {
     public async getProducts(req: Request, res: Response) {
-        const { searchTitle } = req.body;
-        const data = await getProducts(searchTitle, req.body);
+        const { title } = req.body;
+        const data = await getProducts(title, req.body);
         res.status(200).json({ code: 1, data })
     }
 
@@ -32,8 +32,7 @@ class ProductController {
     }
 
     public async saleProduct(req: Request, res: Response) {
-        const productId = req.params.productId;
-        const { quantity } = req.body
+        const { quantity, productId } = req.body
         const saledProduct = await saleProduct(productId, quantity)
         res.status(200).json({ code: 1, data: saledProduct })
     }

@@ -3,19 +3,19 @@ import { paginate } from "../../utils/pagination";
 import Product from "./product.model";
 
 export const getProducts = async (
-    searchTitle: string,
+    title: string,
     params: any
 ) => {
     // let query = {};
 
-    // if (searchTitle) {
-    //     query = { title: { $regex: searchTitle, $options: 'i' } };
+    // if (title) {
+    //     query = { title: { $regex: title, $options: 'i' } };
     // }
 
     // const products = await Product.find(query);
     const filters: any = {};
-    if (searchTitle) {
-        filters.title = { exact: searchTitle };
+    if (title) {
+        filters.title = { exact: title };
     }
     const paginatedData = await paginate(Product, params, filters);
 
@@ -26,6 +26,7 @@ export const getProductById = async (
     productId: string
 ) => {
     const product = await Product.findById(productId);
+
     if (!product) {
         throw new NotFoundError('Product not found')
     }
