@@ -1,5 +1,6 @@
+import NotFoundError from "../../utils/errors/notFoundError";
 import { paginate } from "../../utils/pagination";
-import User from "../auth/auth.model";
+import Manager from "../auth/auth.model";
 
 export const getManagers = async (
     filters: any
@@ -9,8 +10,8 @@ export const getManagers = async (
         surname,
         createdAtFrom,
         createdAtTo,
-        priceFrom,
-        priceTo,
+        totalOfSalesFrom,
+        totalOfSalesTo,
         pageSize,
         pageIndex } = filters
 
@@ -36,14 +37,36 @@ export const getManagers = async (
     } else if (createdAtTo) {
         query.createdAt = { to: new Date(createdAtTo) };
     }
-    if (priceFrom && priceTo) {
-        query.totalPrice = { range: { from: parseFloat(priceFrom), to: parseFloat(priceTo) } };
-    } else if (priceFrom) {
-        query.totalPrice = { from: parseFloat(priceFrom) };
-    } else if (priceTo) {
-        query.totalPrice = { to: parseFloat(priceTo) };
+    if (totalOfSalesFrom && totalOfSalesTo) {
+        query.totalOfSales = { range: { from: parseFloat(totalOfSalesFrom), to: parseFloat(totalOfSalesTo) } };
+    } else if (totalOfSalesFrom) {
+        query.totalOfSales = { from: parseFloat(totalOfSalesFrom) };
+    } else if (totalOfSalesTo) {
+        query.totalOfSales = { to: parseFloat(totalOfSalesTo) };
     }
-    const paginatedData = await paginate(User, params, query)
+    const paginatedData = await paginate(Manager, params, query)
 
     return paginatedData;
+}
+
+export const getManagerById = async (
+    managerId: string
+) => {
+    const manager = await Manager.findById(managerId);
+
+    if (!manager) {
+        throw new NotFoundError('Manager not found')
+    }
+    return manager;
+}
+
+export const updateManagerTotalCount = async (
+    managerId: string,
+    quantity: number
+) => {
+    const manager = await getManagerById(managerId);
+    manager.totalOfSales += quantity;
+
+    await manager.save();
+    return manager;
 }

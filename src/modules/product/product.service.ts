@@ -1,4 +1,5 @@
 import NotFoundError from "../../utils/errors/notFoundError";
+import ValidationError from "../../utils/errors/validationError";
 import { paginate } from "../../utils/pagination";
 import Product from "./product.model";
 
@@ -74,6 +75,11 @@ export const saleProduct = async (
     quantity: number
 ) => {
     const product = await getProductById(productId);
+
+    if (quantity > product.productCount) {
+        throw new ValidationError('Invalid input')
+    }
+
     product.productCount -= quantity;
     await product.save();
     return product;
