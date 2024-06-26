@@ -10,4 +10,9 @@ managerRouter.post('/',
     wrapAsync(ManagerController.getManagers)
 );
 
+managerRouter.post('/saled-products',
+    verifyToken,
+    wrapAsync(ManagerController.getSaledProducts)
+);
+
 export default managerRouter;

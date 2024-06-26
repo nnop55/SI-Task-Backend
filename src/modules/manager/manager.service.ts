@@ -1,6 +1,7 @@
 import NotFoundError from "../../utils/errors/notFoundError";
 import { paginate } from "../../utils/pagination";
 import Manager from "../auth/auth.model";
+import SaledProduct from "./saled-product.model";
 
 export const getManagers = async (
     filters: any
@@ -70,3 +71,54 @@ export const updateManagerTotalCount = async (
     await manager.save();
     return manager;
 }
+
+
+export const addOrUpdateSaledProduct = async (
+    userId: string,
+    quantity: number,
+    title: string,
+    price: number,
+    productId: string
+) => {
+
+    const exist = await getSaledProductById(productId)
+
+    if (exist) {
+        exist.saledProductCount += quantity;
+
+        await exist.save();
+        return exist;
+    }
+
+    const payload = {
+        userId,
+        title,
+        price,
+        saledProductCount: quantity,
+        productId
+    }
+    const newProduct = new SaledProduct(payload);
+    await newProduct.save();
+    return newProduct;
+}
+
+export const getSaledProducts = async (
+    title: string
+) => {
+    let query: any = {}
+    if (title) {
+        query['title'] = { $regex: title, $options: 'i' };
+    }
+
+    const saledProducts = await SaledProduct.find(query);
+    return saledProducts ?? null;
+}
+
+const getSaledProductById = async (
+    productId: string
+) => {
+    const product = await SaledProduct.findOne({ productId });
+    return product ?? null;
+}
+
+

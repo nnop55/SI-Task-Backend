@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { createProduct, deleteProduct, getProducts, getProductById, updateProduct, saleProduct } from './product.service';
-import { updateManagerTotalCount } from '../manager/manager.service';
+import { updateManagerTotalCount, addOrUpdateSaledProduct } from '../manager/manager.service';
 
 class ProductController {
     public async getProducts(req: Request, res: Response) {
@@ -36,6 +36,15 @@ class ProductController {
         const saledProduct = await saleProduct(productId, quantity)
         const managerId = (req as any).user['_id'];
         await updateManagerTotalCount(managerId, quantity);
+
+        await addOrUpdateSaledProduct(
+            managerId,
+            quantity,
+            saledProduct.title,
+            saledProduct.price,
+            productId
+        )
+
         res.status(200).json({ code: 1, data: saledProduct })
     }
 }
