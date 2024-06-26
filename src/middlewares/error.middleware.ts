@@ -20,6 +20,9 @@ export const errorHandler = (
     } else if (err instanceof CustomError) {
         status = err.status;
         message = err.message;
+    } else if ((err as any).code === 11000) {
+        status = 400;
+        message = 'Manager with this username already registered';
     }
 
     res.status(status).json({
