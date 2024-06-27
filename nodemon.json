@@ -1,4 +1,0 @@
-{
-  "ext": "ts",
-  "exec": "node --experimental-modules"
-}
