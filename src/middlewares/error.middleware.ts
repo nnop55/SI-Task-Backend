@@ -22,7 +22,7 @@ export const errorHandler = (
         message = err.message;
     } else if ((err as any).code === 11000) {
         status = 400;
-        message = 'Manager with this username already registered';
+        message = 'manager_exist';
     }
 
     res.status(status).json({

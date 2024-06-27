@@ -13,7 +13,7 @@ class AuthController {
         const isMatch = comparePasswords(password, user.password)
 
         if (!isMatch) {
-            throw new ValidationError('Invalid password')
+            throw new ValidationError('invalid_password')
         }
 
         const accessToken = getJwt(

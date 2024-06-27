@@ -17,6 +17,10 @@ const SaledProductSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'

@@ -74,6 +74,7 @@ export const updateManagerTotalCount = async (
 
 
 export const addOrUpdateSaledProduct = async (
+    userId: string,
     quantity: number,
     title: string,
     price: number,
@@ -90,6 +91,7 @@ export const addOrUpdateSaledProduct = async (
     }
 
     const payload = {
+        userId,
         title,
         price,
         saledProductCount: quantity,
@@ -101,11 +103,16 @@ export const addOrUpdateSaledProduct = async (
 }
 
 export const getSaledProducts = async (
+    userId: string,
     title: string
 ) => {
     let query: any = {}
     if (title) {
         query['title'] = { $regex: title, $options: 'i' };
+    }
+
+    if (userId) {
+        query['userId'] = userId;
     }
 
     const saledProducts = await SaledProduct.find(query);
