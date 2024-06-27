@@ -71,7 +71,7 @@ const updateManagerTotalCount = (managerId, quantity) => __awaiter(void 0, void 
 });
 exports.updateManagerTotalCount = updateManagerTotalCount;
 const addOrUpdateSaledProduct = (userId, quantity, title, price, productId) => __awaiter(void 0, void 0, void 0, function* () {
-    const exist = yield getSaledProductById(productId);
+    const exist = yield getSaledProductById(userId);
     if (exist) {
         exist.saledProductCount += quantity;
         yield exist.save();
@@ -101,7 +101,7 @@ const getSaledProducts = (userId, title) => __awaiter(void 0, void 0, void 0, fu
     return saledProducts !== null && saledProducts !== void 0 ? saledProducts : null;
 });
 exports.getSaledProducts = getSaledProducts;
-const getSaledProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield saled_product_model_1.default.findOne({ productId });
+const getSaledProductById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = yield saled_product_model_1.default.findOne({ userId });
     return product !== null && product !== void 0 ? product : null;
 });

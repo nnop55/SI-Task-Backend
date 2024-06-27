@@ -21,6 +21,7 @@ const database_1 = require("./shared/database");
 const product_router_1 = __importDefault(require("./modules/product/product.router"));
 const manager_router_1 = __importDefault(require("./modules/manager/manager.router"));
 const auth_router_1 = __importDefault(require("./modules/auth/auth.router"));
+const config_1 = require("./shared/config");
 const app = (0, express_1.default)();
 setupMiddleware();
 setupRoutes();
@@ -31,6 +32,8 @@ function setupMiddleware() {
     app.use(access_middleware_1.restrictAccess);
     app.use((0, cors_1.default)());
     app.options('*', (0, cors_1.default)({
+        origin: [config_1.accessUrl],
+        credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization']
     }));
     app.use(express_1.default.json());
