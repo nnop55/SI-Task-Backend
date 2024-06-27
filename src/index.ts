@@ -8,6 +8,7 @@ import { connectDb } from './shared/database';
 import productRouter from './modules/product/product.router';
 import managerRouter from './modules/manager/manager.router';
 import authRouter from './modules/auth/auth.router';
+import { accessUrl } from './shared/config';
 
 const app: Express = express();
 
@@ -22,7 +23,7 @@ function setupMiddleware() {
     app.use(restrictAccess)
     app.use(cors());
     app.options('*', cors({
-        origin: ['http://localhost:4200'],
+        origin: [accessUrl!],
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization']
     }));
