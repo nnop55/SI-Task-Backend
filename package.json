@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "set NODE_ENV=development&& nodemon --exec ts-node-esm src/index.ts",
-    "start": "set NODE_ENV=production&& node src/index.ts",
-    "seed": "set NODE_ENV=development&& nodemon --exec ts-node-esm src/utils/seed.ts"
+    "start": "set NODE_ENV=production&& node dist/index.js",
+    "seed": "set NODE_ENV=development&& nodemon --exec ts-node-esm src/utils/seed.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
