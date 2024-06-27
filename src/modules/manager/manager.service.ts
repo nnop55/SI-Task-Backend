@@ -74,7 +74,6 @@ export const updateManagerTotalCount = async (
 
 
 export const addOrUpdateSaledProduct = async (
-    userId: string,
     quantity: number,
     title: string,
     price: number,
@@ -91,7 +90,6 @@ export const addOrUpdateSaledProduct = async (
     }
 
     const payload = {
-        userId,
         title,
         price,
         saledProductCount: quantity,

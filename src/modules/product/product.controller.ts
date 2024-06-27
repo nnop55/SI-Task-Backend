@@ -38,7 +38,6 @@ class ProductController {
         await updateManagerTotalCount(managerId, quantity);
 
         await addOrUpdateSaledProduct(
-            managerId,
             quantity,
             saledProduct.title,
             saledProduct.price,
