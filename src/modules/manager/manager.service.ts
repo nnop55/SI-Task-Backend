@@ -81,7 +81,7 @@ export const addOrUpdateSaledProduct = async (
     productId: string
 ) => {
 
-    const exist = await getSaledProductById(productId)
+    const exist = await getSaledProductById(userId)
 
     if (exist) {
         exist.saledProductCount += quantity;
@@ -120,9 +120,9 @@ export const getSaledProducts = async (
 }
 
 const getSaledProductById = async (
-    productId: string
+    userId: string
 ) => {
-    const product = await SaledProduct.findOne({ productId });
+    const product = await SaledProduct.findOne({ userId });
     return product ?? null;
 }
 
