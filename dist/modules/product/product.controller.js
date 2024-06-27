@@ -50,7 +50,7 @@ class ProductController {
             const { quantity, productId } = req.body;
             const saledProduct = yield (0, product_service_1.saleProduct)(productId, quantity);
             const managerId = req.user['_id'];
-            yield (0, manager_service_1.updateManagerTotalCount)(managerId, quantity);
+            yield (0, manager_service_1.updateManagerTotalCount)(managerId, quantity, saledProduct.price);
             yield (0, manager_service_1.addOrUpdateSaledProduct)(managerId, quantity, saledProduct.title, saledProduct.price, productId);
             res.status(200).json({ code: 1, data: saledProduct });
         });

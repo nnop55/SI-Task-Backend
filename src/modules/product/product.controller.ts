@@ -35,7 +35,7 @@ class ProductController {
         const { quantity, productId } = req.body
         const saledProduct = await saleProduct(productId, quantity)
         const managerId = (req as any).user['_id'];
-        await updateManagerTotalCount(managerId, quantity);
+        await updateManagerTotalCount(managerId, quantity, saledProduct.price);
 
         await addOrUpdateSaledProduct(
             managerId,

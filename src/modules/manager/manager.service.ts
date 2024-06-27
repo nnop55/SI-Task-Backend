@@ -63,10 +63,12 @@ export const getManagerById = async (
 
 export const updateManagerTotalCount = async (
     managerId: string,
-    quantity: number
+    quantity: number,
+    price: number
 ) => {
     const manager = await getManagerById(managerId);
-    manager.totalOfSales += quantity;
+    const saled = quantity * price;
+    manager.totalOfSales += saled;
 
     await manager.save();
     return manager;

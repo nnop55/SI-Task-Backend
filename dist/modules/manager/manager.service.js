@@ -63,9 +63,10 @@ const getManagerById = (managerId) => __awaiter(void 0, void 0, void 0, function
     return manager;
 });
 exports.getManagerById = getManagerById;
-const updateManagerTotalCount = (managerId, quantity) => __awaiter(void 0, void 0, void 0, function* () {
+const updateManagerTotalCount = (managerId, quantity, price) => __awaiter(void 0, void 0, void 0, function* () {
     const manager = yield (0, exports.getManagerById)(managerId);
-    manager.totalOfSales += quantity;
+    const saled = quantity * price;
+    manager.totalOfSales += saled;
     yield manager.save();
     return manager;
 });
