@@ -22,6 +22,8 @@ function setupMiddleware() {
     app.use(restrictAccess)
     app.use(cors());
     app.options('*', cors({
+        origin: ['http://localhost:4200'],
+        credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization']
     }));
     app.use(express.json());
