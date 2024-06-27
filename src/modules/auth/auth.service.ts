@@ -44,7 +44,7 @@ export const getUserByColumn = async (
     const user = await User.findOne(query);
     query = {}
     if (!user) {
-        throw new NotFoundError('User not found')
+        throw new NotFoundError('user_not_found')
     }
     return user;
 }

@@ -39,7 +39,7 @@ export const getProductById = async (
     const product = await Product.findById(productId);
 
     if (!product) {
-        throw new NotFoundError('Product not found')
+        throw new NotFoundError('product_not_found')
     }
     return product;
 }
